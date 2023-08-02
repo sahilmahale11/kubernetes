@@ -12,13 +12,12 @@ pipeline {
 	
                 steps {
 
-	            checkout([$class: 'GitSCM', branches: [[name: '*/master']], extensions: [], userRemoteConfigs: [[url: 'https://github.com/sahilmahale11/kubernetes.git']]])			                   			                           
+	            checkout([$class: 'GitSCM', branches: [[name: '*/master']], extensions: [], userRemoteConfigs: [[url: 'https://github.com/sugreevudu/kubernetes.git']]])			                   			                           
                       }
 				   }
-	    					          
+	    sshagent(credentials: ['local1']) {						          
             stage('mysql deployment') {
-		sshagent(credentials: ['local1']) {
-			  
+			  steps {
 			    sh '''kubectl apply -f wordpre-phpmysql-mysql-deployments/mysql-user-pass.yaml
 	              kubectl apply -f wordpre-phpmysql-mysql-deployments/mysql-db-url.yaml
                 kubectl apply -f wordpre-phpmysql-mysql-deployments/mysql-root-pass.yaml
@@ -26,20 +25,21 @@ pipeline {
                 kubectl apply -f wordpre-phpmysql-mysql-deployments/mysql-pvc.yaml
                 kubectl apply -f wordpre-phpmysql-mysql-deployments/mysql-deployment.yaml
                 kubectl apply -f wordpre-phpmysql-mysql-deployments/mysql-service.yaml'''		         
-	                 
+	                 }
 			    }
           stage('php-myadmin-deployment') {
-			     
+			     steps {
 			          sh '''kubectl apply -f wordpre-phpmysql-mysql-deployments/phpmyadmin-deploy.yaml
 	              kubectl apply -f wordpre-phpmysql-mysql-deployments/phpmyadmin-service.yaml'''         
-	                
+	                 }
 			    }
           stage('wordpress-deployment') {
-			  
+			     steps {
 			          sh '''kubectl apply -f wordpre-phpmysql-mysql-deployments/wordpress-deploy.yaml
 	              kubectl apply -f wordpre-phpmysql-mysql-deployments/wordpress-service.yaml'''         
-	                
-	                   }
+	                 }
 			    }
           }
 	}
+}
+	
