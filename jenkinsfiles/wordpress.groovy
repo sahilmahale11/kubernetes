@@ -12,7 +12,7 @@ pipeline {
 	
                 steps {
 
-	            checkout([$class: 'GitSCM', branches: [[name: '*/master']], extensions: [], userRemoteConfigs: [[url: 'https://github.com/sugreevudu/kubernetes.git']]])			                   			                           
+	            checkout([$class: 'GitSCM', branches: [[name: '*/master']], extensions: [], userRemoteConfigs: [[url: 'https://github.com/sahilmahale11/kubernetes.git']]])			                   			                           
                       }
 				   }
 	    					          
