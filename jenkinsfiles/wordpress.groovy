@@ -19,7 +19,7 @@ pipeline {
 								          
             stage('mysql deployment') {
 			  steps {
-			    sh '''kubectl apply -f wordpre-phpmysql-mysql-deployments/mysql-user-pass.yaml
+			    sh '''kubectl apply -f wordpre-phpmysql-mysql-deployments/mysql-user-pass.yaml --context minikube
 	              kubectl apply -f wordpre-phpmysql-mysql-deployments/mysql-db-url.yaml
                 kubectl apply -f wordpre-phpmysql-mysql-deployments/mysql-root-pass.yaml
                 kubectl apply -f wordpre-phpmysql-mysql-deployments/mysql-pv.yaml
